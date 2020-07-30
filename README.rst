@@ -117,6 +117,12 @@ Shared pages will also have a new dropdown menu option that links to this sharin
     :alt: Dropdown with sharing link
     :width: 640px
 
+To use tokens in place of the page path on the sharing site, add the following setting:
+
+.. code-block:: python
+
+  WAGTAILSHARING_TOKENIZE_URL = True
+
 Hooks
 -----
 
