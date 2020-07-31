@@ -2,7 +2,6 @@ import inspect
 import jwt
 import logging
 
-
 from django.conf import settings
 from django.http import Http404, HttpResponse
 from django.views.generic import View

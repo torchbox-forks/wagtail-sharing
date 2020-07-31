@@ -15,7 +15,9 @@ if getattr(settings, "WAGTAILSHARING_TOKENIZE_URL", False):
         name="wagtail_serve",
     )
 else:
-    wagtailsharing_serve_path = re_path(serve_pattern, ServeView.as_view(), name="wagtail_serve")
+    wagtailsharing_serve_path = re_path(
+        serve_pattern, ServeView.as_view(), name="wagtail_serve"
+    )
 
 urlpatterns = [
     wagtailsharing_serve_path
