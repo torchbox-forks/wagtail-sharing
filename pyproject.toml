@@ -10,6 +10,7 @@ authors = [
 ]
 dependencies = [
     "wagtail>=3",
+    "pyjwt>1.7,<2.5",
 ]
 classifiers = [
     "Framework :: Django",
