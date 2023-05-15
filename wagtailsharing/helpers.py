@@ -1,7 +1,8 @@
-import jwt
 from django.conf import settings
 
 from wagtail.models import Site
+
+import jwt
 
 from wagtailsharing.models import SharingSite
 

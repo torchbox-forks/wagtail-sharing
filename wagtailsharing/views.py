@@ -1,5 +1,4 @@
 import inspect
-import jwt
 import logging
 
 from django.conf import settings
@@ -11,6 +10,8 @@ from wagtail import hooks
 from wagtail.contrib.routable_page.models import RoutablePageMixin
 from wagtail.url_routing import RouteResult
 from wagtail.views import serve as wagtail_serve
+
+import jwt
 
 from wagtailsharing.models import SharingSite
 

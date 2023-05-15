@@ -1,5 +1,5 @@
-from django.urls import re_path
 from django.conf import settings
+from django.urls import re_path
 
 from wagtail.urls import serve_pattern
 from wagtail.urls import urlpatterns as wagtailcore_urlpatterns
