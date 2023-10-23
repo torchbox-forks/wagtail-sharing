@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from wagtail.models import Site
 
@@ -60,3 +60,20 @@ class TestGetSharingUrl(TestCase):
         page.slug = "fourth"
         page.save_revision()
         self.assertEqual(get_sharing_url(page), "http://hostname/third/")
+
+
+@override_settings(WAGTAILSHARING_TOKENIZE_URL=True)
+class TestGetSharingUrlTokenized(TestCase):
+    def setUp(self):
+        self.default_site = Site.objects.get(is_default_site=True)
+
+    def create_sharing_site(self, hostname):
+        SharingSite.objects.create(site=self.default_site, hostname=hostname)
+
+    def test_get_tokenized_sharing_url(self):
+        self.create_sharing_site(hostname="hostname")
+        page = create_draft_page(self.default_site, title="a tokenized page")
+        page.save_revision().publish()
+        self.assertEqual(
+            get_sharing_url(page).startswith("http://hostname/share/"), True
+        )
