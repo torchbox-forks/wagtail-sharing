@@ -39,8 +39,10 @@ class TestAddSharingLink(TestCase):
             links = add_sharing_link(self.page, **kwargs)
             button = next(links)
             self.assertEqual(button.url, url)
+
+            expected_title = button.attrs["aria-label"] if WAGTAIL_VERSION >= (5, 2) else button.attrs["title"]
             self.assertIn(
-                self.page.get_admin_display_title(), button.attrs["title"]
+                self.page.get_admin_display_title(), expected_title
             )
 
 
