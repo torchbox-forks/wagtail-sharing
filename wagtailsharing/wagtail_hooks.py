@@ -46,6 +46,7 @@ else:
 
 
 if WAGTAIL_VERSION >= (5, 2):
+
     @hooks.register("register_page_header_buttons")
     @hooks.register("register_page_listing_more_buttons")
     def add_sharing_link(page, user, is_parent=False, next_url=None):
@@ -63,7 +64,9 @@ if WAGTAIL_VERSION >= (5, 2):
                 },
                 priority=90,
             )
+
 else:
+
     @hooks.register("register_page_header_buttons")
     @hooks.register("register_page_listing_more_buttons")
     def add_sharing_link(page, page_perms, is_parent=False, next_url=None):

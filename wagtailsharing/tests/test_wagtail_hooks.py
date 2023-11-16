@@ -26,7 +26,11 @@ class TestAddSharingLink(TestCase):
         with patch(
             "wagtailsharing.wagtail_hooks.get_sharing_url", return_value=None
         ):
-            kwargs = {"user": self.user} if WAGTAIL_VERSION >= (5, 2) else {"page_perms": self.page_perms}
+            kwargs = (
+                {"user": self.user}
+                if WAGTAIL_VERSION >= (5, 2)
+                else {"page_perms": self.page_perms}
+            )
             links = add_sharing_link(self.page, **kwargs)
             self.assertFalse(list(links))
 
@@ -35,15 +39,21 @@ class TestAddSharingLink(TestCase):
         with patch(
             "wagtailsharing.wagtail_hooks.get_sharing_url", return_value=url
         ):
-            kwargs = {"user": self.user} if WAGTAIL_VERSION >= (5, 2) else {"page_perms": self.page_perms}
+            kwargs = (
+                {"user": self.user}
+                if WAGTAIL_VERSION >= (5, 2)
+                else {"page_perms": self.page_perms}
+            )
             links = add_sharing_link(self.page, **kwargs)
             button = next(links)
             self.assertEqual(button.url, url)
 
-            expected_title = button.attrs["aria-label"] if WAGTAIL_VERSION >= (5, 2) else button.attrs["title"]
-            self.assertIn(
-                self.page.get_admin_display_title(), expected_title
+            expected_title = (
+                button.attrs["aria-label"]
+                if WAGTAIL_VERSION >= (5, 2)
+                else button.attrs["title"]
             )
+            self.assertIn(self.page.get_admin_display_title(), expected_title)
 
 
 class TestAddSharingBanner(TestCase):
