@@ -10,7 +10,7 @@ from wagtail import hooks
 from wagtail.admin import widgets as wagtailadmin_widgets
 
 
-if WAGTAIL_VERSION >= (5, 1):
+if WAGTAIL_VERSION >= (5, 1):  # pragma: no cover
     from wagtail.snippets.models import register_snippet
     from wagtail.snippets.views.snippets import SnippetViewSet
 else:
@@ -23,7 +23,7 @@ from wagtailsharing.helpers import get_sharing_url
 from wagtailsharing.models import SharingSite
 
 
-if WAGTAIL_VERSION >= (5, 1):
+if WAGTAIL_VERSION >= (5, 1):  # pragma: no cover
 
     class SharingSiteViewSet(SnippetViewSet):
         model = SharingSite
