@@ -4,6 +4,9 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.test import RequestFactory, TestCase, override_settings
 
+from wagtail import VERSION as WAGTAIL_VERSION
+from wagtail.test.utils.wagtail_tests import WagtailTestUtils
+
 from wagtailsharing.tests.shareable_routable_testapp.models import TestPage
 from wagtailsharing.wagtail_hooks import (
     add_sharing_banner,
@@ -17,12 +20,18 @@ class TestAddSharingLink(TestCase):
     def setUp(self):
         self.page = TestPage(title="title", slug="slug")
         self.page_perms = Mock()
+        self.user = WagtailTestUtils.create_test_user()
 
     def test_no_link_no_button(self):
         with patch(
             "wagtailsharing.wagtail_hooks.get_sharing_url", return_value=None
         ):
-            links = add_sharing_link(self.page, self.page_perms)
+            kwargs = (
+                {"user": self.user}
+                if WAGTAIL_VERSION >= (5, 2)
+                else {"page_perms": self.page_perms}
+            )
+            links = add_sharing_link(self.page, **kwargs)
             self.assertFalse(list(links))
 
     def test_link_makes_button(self):
@@ -30,12 +39,21 @@ class TestAddSharingLink(TestCase):
         with patch(
             "wagtailsharing.wagtail_hooks.get_sharing_url", return_value=url
         ):
-            links = add_sharing_link(self.page, self.page_perms)
+            kwargs = (
+                {"user": self.user}
+                if WAGTAIL_VERSION >= (5, 2)
+                else {"page_perms": self.page_perms}
+            )
+            links = add_sharing_link(self.page, **kwargs)
             button = next(links)
             self.assertEqual(button.url, url)
-            self.assertIn(
-                self.page.get_admin_display_title(), button.attrs["title"]
+
+            expected_title = (
+                button.attrs["aria-label"]
+                if WAGTAIL_VERSION >= (5, 2)
+                else button.attrs["title"]
             )
+            self.assertIn(self.page.get_admin_display_title(), expected_title)
 
 
 class TestAddSharingBanner(TestCase):
