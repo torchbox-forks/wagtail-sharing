@@ -3,6 +3,8 @@ We follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
 
 ## Unreleased
 
+- Bring back token generation for sharing links, this work was proposed here but not accepted: https://github.com/cfpb/wagtail-sharing/pull/47
+
 ## 2.12 - 2023-12-19
 
 - Add support for Wagtail 5.1 and 5.2
@@ -11,6 +13,7 @@ We follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
 ## 2.11 - 2023-11-29
 
 - Add support for Wagtail 5.0 (https://github.com/cfpb/wagtail-sharing/pull/70)
+- Add support for Wagtail 5.1
 
 ## 2.10 - 2023-08-16
 
