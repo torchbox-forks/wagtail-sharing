@@ -18,8 +18,10 @@ if getattr(settings, "WAGTAILSHARING_TOKENIZE_URL", False):
     ]
 else:
     urlpatterns = [
-        re_path(serve_pattern, ServeView.as_view(), name="wagtail_serve")
-        if urlpattern.name == "wagtail_serve"
-        else urlpattern
+        (
+            re_path(serve_pattern, ServeView.as_view(), name="wagtail_serve")
+            if urlpattern.name == "wagtail_serve"
+            else urlpattern
+        )
         for urlpattern in wagtailcore_urlpatterns
     ]
