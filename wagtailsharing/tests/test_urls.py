@@ -2,7 +2,7 @@ from importlib import reload
 from unittest.mock import patch
 
 from django.test import TestCase
-from django.urls import re_path
+from django.urls import path, re_path
 
 from wagtail import urls as wagtail_core_urls
 
@@ -15,9 +15,9 @@ class TestUrlPatterns(TestCase):
             pass  # pragma: no cover
 
         root_patterns = [
-            re_path(r"^foo/$", re_path, name="foo"),
+            path("foo/", re_path, name="foo"),
             re_path(r"^((?:[\w\-]+/)*)$", re_path, name="wagtail_serve"),
-            re_path(r"^bar/$", re_path, name="bar"),
+            path("bar/", re_path, name="bar"),
         ]
 
         self.patcher = patch.object(
