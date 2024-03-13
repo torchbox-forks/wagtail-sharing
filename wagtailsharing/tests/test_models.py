@@ -128,14 +128,14 @@ class TestShareableRoutablePage(TestCase):
         # Request from the sharing site
         plain_response = self.client.get(
             "/routable-page/",
-            headers={"host": "sharinghostname"},
+            HTTP_HOST="sharinghostname",
             SERVER_PORT=1234,
         )
         self.assertContains(plain_response, "Published text")
 
         shareable_response = self.client.get(
             "/shareable-routable-page/",
-            headers={"host": "sharinghostname"},
+            HTTP_HOST="sharinghostname",
             SERVER_PORT=1234,
         )
         self.assertContains(shareable_response, "Shareable draft text")
