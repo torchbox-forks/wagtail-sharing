@@ -41,7 +41,7 @@ Add ``wagtailsharing`` as an installed app in your Django settings:
 
 ``wagtail.snippets`` is also required and must be included in your list of installed apps.
 
-The code examples below assume that you are using a recent Wagtail version (3.0+).
+The code examples below assume that you are using a recent Wagtail version (5.2+).
 
 Run migrations to create required database tables:
 
@@ -202,8 +202,8 @@ Compatibility
 This project has been tested for compatibility with:
 
 * Python 3.9+
-* Django 3.2+
-* Wagtail 5.1+ (see past releases for older Wagtail support)
+* Django 4.2+
+* Wagtail 5.2+ (see past releases for older Wagtail support)
 
 It should be compatible with all intermediate versions, as well.
 If you find that it is not, please `file an issue <https://github.com/cfpb/wagtail-sharing/issues/new>`_.
