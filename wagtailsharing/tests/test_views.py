@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 from django.http import Http404, HttpResponse
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory, TestCase, override_settings
 
 from wagtail.models import Site
 from wagtail.test.utils import WagtailTestUtils
@@ -11,7 +11,7 @@ from wagtailsharing.tests.helpers import (
     create_draft_page,
     create_draft_routable_page,
 )
-from wagtailsharing.views import ServeView
+from wagtailsharing.views import ServeView, TokenServeView
 
 
 def before_hook_returns_http_response(*args):
@@ -217,3 +217,39 @@ class TestServeView(WagtailTestUtils, TestCase):
             request = self.make_request("/page/", HTTP_HOST="sharinghostname")
             response = ServeView.as_view()(request, request.path)
             self.assertContains(response, "returned by hook")
+
+
+@override_settings(WAGTAILSHARING_TOKENIZE_URL=True)
+class TestTokenServeView(WagtailTestUtils, TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.default_site = Site.objects.get(is_default_site=True)
+
+    def make_request(self, path, method="get", **kwargs):
+        return getattr(self.factory, method)(path, **kwargs)
+
+    def create_sharing_site(self, hostname):
+        SharingSite.objects.create(site=self.default_site, hostname=hostname)
+
+    def assert_title_matches(self, response, title):
+        self.assertContains(response, title)
+
+    def test_no_sharing_site_exists_uses_token_serve(self):
+        request = self.make_request("/")
+        with patch("wagtailsharing.views.wagtail_serve") as wagtail_serve:
+            TokenServeView.as_view()(request, request.path)
+            wagtail_serve.assert_called_once_with(request, request.path)
+
+    def test_no_sharing_site_exists_post_uses_wagtail_serve(self):
+        request = self.make_request("/", method="post")
+        with patch("wagtailsharing.views.wagtail_serve") as wagtail_serve:
+            TokenServeView.as_view()(request, request.path)
+            wagtail_serve.assert_called_once_with(request, request.path)
+
+    def test_sharing_site_post_uses_token_serve(self):
+        self.create_sharing_site(hostname="hostname")
+
+        request = self.make_request("/", HTTP_HOST="hostname", method="post")
+        with patch("wagtailsharing.views.wagtail_serve") as wagtail_serve:
+            TokenServeView.as_view()(request, request.path)
+            wagtail_serve.assert_called_once_with(request, request.path)
