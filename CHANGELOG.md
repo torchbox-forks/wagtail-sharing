@@ -2,6 +2,10 @@ All notable changes to this project will be documented in this file.
 We follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
 
 ## Unreleased
+
+- Add support for Wagtail 6, Django 5.0, and Python 3.12
+- Drop support for Django < 4.2
+
 ## 2.12.1 2024-01-09
 
 - Fix deprecation warning in Wagtail 5.2 (https://github.com/cfpb/wagtail-sharing/pull/73)

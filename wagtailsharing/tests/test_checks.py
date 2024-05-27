@@ -10,7 +10,7 @@ if WAGTAIL_VERSION <= (5, 0):
 
     class TestModelAdminInstalledCheck(SimpleTestCase):
         @override_settings(
-            INSTALLED_APPS=["wagtail.contrib.modeladmin", "wagtailsharing"]
+            INSTALLED_APPS=["wagtail_modeladmin", "wagtailsharing"]
         )
         def test_check_passes_if_modeladmin_installed(self):
             self.assertFalse(
