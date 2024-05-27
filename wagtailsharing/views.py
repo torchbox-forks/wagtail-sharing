@@ -3,7 +3,6 @@ import inspect
 from django.http import Http404, HttpResponse
 from django.views.generic import View
 
-import wagtail
 from wagtail import hooks
 from wagtail.contrib.routable_page.models import RoutablePageMixin
 from wagtail.url_routing import RouteResult

@@ -1,6 +1,5 @@
 from django.db import models
 
-import wagtail
 from wagtail.contrib.routable_page.models import RoutablePageMixin
 from wagtail.models import Site
 
